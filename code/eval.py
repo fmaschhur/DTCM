@@ -13,7 +13,7 @@ DEFAULT_EVAL_DATA_PATH = "test1.csv"
 EVAL_RESULT_PATH = "eval.csv"
 
 BASE_BERT_MODEL = "deepset/gbert-base"
-FINETUNED_BERT_MODEL_PATH = "deepset-gbert-base-finetuned"
+FINETUNED_BERT_MODEL_PATH = "../model/deepset-gbert-base-finetuned"
 
 
 def make_predictions(test_dl: DataLoader, model: BertForSequenceClassification) -> List:
