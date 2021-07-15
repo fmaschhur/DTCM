@@ -29,7 +29,7 @@ Our submitted model follow the architecture for sequence classification as it wa
 	a) Applying a dropout layer.  
 	b) Projecting to a single float value with another linear layer.
 	
-[Diagram of model architecture](bert_regressor.png)
+![Diagram of model architecture](bert_regressor.png)
 
 As our base BERT model we used [`gbert-base`](https://huggingface.co/deepset/gbert-base), the smaller of the two GBERT models. We found, that with the larger model and the GELECTRA models there was a significantly higher variance in evaluation error when using different random seeds for weight initialization and data splitting/shuffeling.
 
