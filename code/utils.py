@@ -3,24 +3,21 @@ import argparse
 
 import pandas as pd
 
+from config import DEFAULT_DATASET_PATH, DEFAULT_TEST_SPLIT_RATIO
 
-def get_cli_args(default_data_path: str) -> argspace.Namespace:
+
+def get_cli_args() -> argparse.Namespace:
     """Parses the given client arguments.
     
     Reacts to the argument --input, which specifies the path
     to a CSV dataset.
-
-    Parameters
-    ----------
-    default_data_path : str
-        the default location of the expected CSV dataset.
-        It is used, if the --input client argument is
-        not specified
     """
 
-    parser = argparse.ArgumentParser(description='Evaluate model on test data.')
-    parser.add_argument('--input', default=default_data_path,
+    parser = argparse.ArgumentParser(description='Evaluate or train model on dataset.')
+    parser.add_argument('--input', default=DEFAULT_DATASET_PATH,
                         help='path of the test data file')
+    parser.add_argument('--test_split', default=DEFAULT_TEST_SPLIT_RATIO,
+                        help='share of the dataset to be used as test data in case of training')
     return parser.parse_args()
 
 

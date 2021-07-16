@@ -4,16 +4,9 @@ import torch
 from torch.utils.data import DataLoader
 from transformers import BertForSequenceClassification
 
-from data import get_test_dl
+from data import get_dataset
 from utils import get_cli_args, save_predictions
-
-
-# default global variables
-DEFAULT_EVAL_DATA_PATH = "test1.csv"
-EVAL_RESULT_PATH = "eval.csv"
-
-BASE_BERT_MODEL = "deepset/gbert-base"
-FINETUNED_BERT_MODEL_PATH = "../model/deepset-gbert-base-finetuned"
+from config import DEFAULT_DATASET_PATH, EVAL_RESULT_PATH, BASE_BERT_MODEL, FINETUNED_BERT_MODEL_PATH
 
 
 def make_predictions(test_dl: DataLoader, model: BertForSequenceClassification) -> List:
@@ -34,7 +27,7 @@ def make_predictions(test_dl: DataLoader, model: BertForSequenceClassification) 
         complexity of the given data
     """
 
-    predictions = [] # for every batch all resulting predictions are saved by appending to this list 
+    predictions = []  # for every batch all resulting predictions are saved by appending to this list
 
     # select GPU if available
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -63,12 +56,13 @@ def make_predictions(test_dl: DataLoader, model: BertForSequenceClassification) 
 
 if __name__ == "__main__":
     # gather command line arguments
-    cli_args = get_cli_args(DEFAULT_EVAL_DATA_PATH)
+    cli_args = get_cli_args()
     eval_data_file_path = cli_args.input
 
     # load the dataset
     print(f"Loading evaluation data from '{eval_data_file_path}' ...")
-    test_dl = get_test_dl(eval_data_file_path, BASE_BERT_MODEL)
+    dataset = get_dataset(eval_data_file_path, BASE_BERT_MODEL)
+    test_dl = DataLoader(dataset)
     print(f"Evaluation data loaded!")
 
     # load the model to be used

@@ -1,6 +1,6 @@
 # Deep Text Complexity Metric
 
-Classifying the complexity of German texts on a 7-step Likert Scale using the german BERT model [gbert](https://huggingface.co/deepset/gbert-base). 
+Predicting the complexity of German sentences on a 7-step Likert Scale using a fine-tuned version of the GBERT model [gbert-base](https://huggingface.co/deepset/gbert-base). 
 
 ---
 
@@ -19,7 +19,7 @@ will download the model and unpack its contents into the `model` folder.
 ## Expected Dataset Format
 
 This implementation expects a certain dataset format. The dataset has to be a `.csv` file and needs to have the following two columns:
-`sent_id` and `sentence`.
+`sent_id` and `sentence`. If the dataset should be used for training, it also needs to have a `MOS` column with the target values.
 
 
 
@@ -28,10 +28,24 @@ This implementation expects a certain dataset format. The dataset has to be a `.
 After downloading the model you can use it by executing 
 
 ```
-$ python eval.py  --input dataset.csv
+$ python code/eval.py  --input dataset.csv
 ```
 
- in your terminal, where `dataset.csv` is your dataset file.
+in your terminal, where `dataset.csv` is your dataset file. 
+The results will be written to a `eval.csv` file.
+
+
+## Training the Model
+
+Execute
+
+```
+$ python code/train.py  --input dataset.csv --test_split 0.1
+```
+
+in your terminal, where `dataset.csv` is your dataset file 
+and `test_split` is the ratio of items in the dataset used for evaluation.
+The fine-tuned model will be saved to `model/deepset-gbert-base-finetuned`.
 
 ## License
 
